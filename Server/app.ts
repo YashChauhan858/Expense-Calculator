@@ -13,7 +13,7 @@ const app = new Hono();
 app.use("*", cors());
 app.use(logger());
 
-// routes
-app.route("/api/expenses", expensesRoute);
-
+// routes with base path "/api", we can in future add more routes to this base path
+const serverType = app.basePath("/api").route("/expenses", expensesRoute);
+export type TServerType = typeof serverType;
 export default app;
