@@ -1,7 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    (async () => {
+      const res = await fetch("/api/expenses", {
+        method: "GET",
+      });
+      const data = await res.json();
+      console.log({ data });
+    })();
+  }, []);
 
   return (
     <>
