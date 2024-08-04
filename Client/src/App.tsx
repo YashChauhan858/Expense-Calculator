@@ -1,17 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { getAllExpenses } from "./network";
+import { useQuery } from "@tanstack/react-query";
 
 function App() {
   const [count, setCount] = useState(0);
+  const { data } = useQuery({
+    queryKey: ["expenses"],
+    queryFn: getAllExpenses,
+  });
 
-  useEffect(() => {
-    (async () => {
-      const res = await fetch("/api/expenses", {
-        method: "GET",
-      });
-      const data = await res.json();
-      console.log({ data });
-    })();
-  }, []);
+  console.log({ data });
 
   return (
     <>

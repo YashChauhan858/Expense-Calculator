@@ -62,4 +62,6 @@ expensesRoute.delete("/:expenseId{[0-9]+}", (c) => {
   return c.json({ message: "Expense deleted!" });
 });
 
+export type TExpensesRoute = typeof expensesRoute;
+
 export default expensesRoute;

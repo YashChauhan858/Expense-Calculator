@@ -14,6 +14,5 @@ app.use("*", cors());
 app.use(logger());
 
 // routes with base path "/api", we can in future add more routes to this base path
-const serverType = app.basePath("/api").route("/expenses", expensesRoute);
-export type TServerType = typeof serverType;
+app.basePath("/api").route("/expenses", expensesRoute);
 export default app;
