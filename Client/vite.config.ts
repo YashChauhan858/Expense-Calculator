@@ -13,11 +13,8 @@ export default defineConfig({
   server: {
     proxy: {
       /**
-       * any request going through the vite server at localhost 3000 will
-       * target the backend server at localhost 4000
-       *
-       * so any request to localhost:3000/api... will be proxied
-       * to localhost:4000
+       * any request going through the vite server at localhost:3000/api will
+       * be forwarded to the backend server at localhost 4000
        */
       "/api": {
         target: "http://localhost:4000",
