@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Button } from "../ui/button";
-import { Home, Upload } from "lucide-react";
+import { Home, Upload, Tags } from "lucide-react";
 
 const Sidebar = () => {
   return (
@@ -23,6 +23,17 @@ const Sidebar = () => {
         >
           <Upload className="mr-2 h-4 w-4" />
           Upload
+        </Link>
+      </Button>
+
+      <Button variant={"outline"} asChild>
+        <Link
+          to="/tags"
+          className="w-full"
+          activeProps={{ className: "bg-white text-black" }}
+        >
+          <Tags className="mr-2 h-4 w-4" />
+          Tags
         </Link>
       </Button>
     </section>

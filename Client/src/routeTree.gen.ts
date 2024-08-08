@@ -16,6 +16,7 @@ import { Route as LoginRegisterImport } from './routes/login-register'
 import { Route as DashboardLayoutImport } from './routes/_dashboardLayout'
 import { Route as IndexImport } from './routes/index'
 import { Route as DashboardLayoutUploadExpenseImport } from './routes/_dashboardLayout/upload-expense'
+import { Route as DashboardLayoutTagsImport } from './routes/_dashboardLayout/tags'
 import { Route as DashboardLayoutDashboardImport } from './routes/_dashboardLayout/dashboard'
 
 // Create/Update Routes
@@ -45,6 +46,11 @@ const DashboardLayoutUploadExpenseRoute =
     path: '/upload-expense',
     getParentRoute: () => DashboardLayoutRoute,
   } as any)
+
+const DashboardLayoutTagsRoute = DashboardLayoutTagsImport.update({
+  path: '/tags',
+  getParentRoute: () => DashboardLayoutRoute,
+} as any)
 
 const DashboardLayoutDashboardRoute = DashboardLayoutDashboardImport.update({
   path: '/dashboard',
@@ -90,6 +96,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardLayoutDashboardImport
       parentRoute: typeof DashboardLayoutImport
     }
+    '/_dashboardLayout/tags': {
+      id: '/_dashboardLayout/tags'
+      path: '/tags'
+      fullPath: '/tags'
+      preLoaderRoute: typeof DashboardLayoutTagsImport
+      parentRoute: typeof DashboardLayoutImport
+    }
     '/_dashboardLayout/upload-expense': {
       id: '/_dashboardLayout/upload-expense'
       path: '/upload-expense'
@@ -106,6 +119,7 @@ export const routeTree = rootRoute.addChildren({
   IndexRoute,
   DashboardLayoutRoute: DashboardLayoutRoute.addChildren({
     DashboardLayoutDashboardRoute,
+    DashboardLayoutTagsRoute,
     DashboardLayoutUploadExpenseRoute,
   }),
   LoginRegisterRoute,
@@ -133,6 +147,7 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "_dashboardLayout.tsx",
       "children": [
         "/_dashboardLayout/dashboard",
+        "/_dashboardLayout/tags",
         "/_dashboardLayout/upload-expense"
       ]
     },
@@ -144,6 +159,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_dashboardLayout/dashboard": {
       "filePath": "_dashboardLayout/dashboard.tsx",
+      "parent": "/_dashboardLayout"
+    },
+    "/_dashboardLayout/tags": {
+      "filePath": "_dashboardLayout/tags.tsx",
       "parent": "/_dashboardLayout"
     },
     "/_dashboardLayout/upload-expense": {

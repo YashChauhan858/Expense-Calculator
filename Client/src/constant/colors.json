@@ -1,0 +1,26 @@
+{
+  "lightColors": [
+    "#FFCCCC",
+    "#CCFFCC",
+    "#CCCCFF",
+    "#FFFFCC",
+    "#CCFFFF",
+    "#FFCCFF",
+    "#FFDDCC",
+    "#E6CCFF",
+    "#FFCCE6",
+    "#D3D3D3"
+  ],
+  "darkColors": [
+    "#990000",
+    "#006600",
+    "#000066",
+    "#999900",
+    "#009999",
+    "#990099",
+    "#CC6600",
+    "#660066",
+    "#CC0066",
+    "#A9A9A9"
+  ]
+}
