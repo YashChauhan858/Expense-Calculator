@@ -1,8 +1,8 @@
 import { TStatementRow, TStatementItem } from "@/types";
-import { createLazyFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { ChangeEvent } from "react";
 import * as XLSX from "xlsx";
-export const Route = createLazyFileRoute("/upload-csv")({
+export const Route = createFileRoute("/upload-csv")({
   component: Index,
 });
 
