@@ -123,6 +123,9 @@ const ExpenseTable = ({ fileData }: { fileData: TStatementItem[] | null }) => {
           }}
           className="max-w-sm"
         />
+        <Button variant={"secondary"} className="ml-3">
+          Save
+        </Button>
       </div>
       <div className="rounded-md border">
         <Table>
