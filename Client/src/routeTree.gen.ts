@@ -13,7 +13,10 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as UploadCsvImport } from './routes/upload-csv'
 import { Route as LoginRegisterImport } from './routes/login-register'
+import { Route as DashboardLayoutImport } from './routes/_dashboardLayout'
 import { Route as IndexImport } from './routes/index'
+import { Route as DashboardLayoutUploadExpenseImport } from './routes/_dashboardLayout/upload-expense'
+import { Route as DashboardLayoutDashboardImport } from './routes/_dashboardLayout/dashboard'
 
 // Create/Update Routes
 
@@ -27,9 +30,25 @@ const LoginRegisterRoute = LoginRegisterImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const DashboardLayoutRoute = DashboardLayoutImport.update({
+  id: '/_dashboardLayout',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const DashboardLayoutUploadExpenseRoute =
+  DashboardLayoutUploadExpenseImport.update({
+    path: '/upload-expense',
+    getParentRoute: () => DashboardLayoutRoute,
+  } as any)
+
+const DashboardLayoutDashboardRoute = DashboardLayoutDashboardImport.update({
+  path: '/dashboard',
+  getParentRoute: () => DashboardLayoutRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -41,6 +60,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/_dashboardLayout': {
+      id: '/_dashboardLayout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof DashboardLayoutImport
       parentRoute: typeof rootRoute
     }
     '/login-register': {
@@ -57,6 +83,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UploadCsvImport
       parentRoute: typeof rootRoute
     }
+    '/_dashboardLayout/dashboard': {
+      id: '/_dashboardLayout/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardLayoutDashboardImport
+      parentRoute: typeof DashboardLayoutImport
+    }
+    '/_dashboardLayout/upload-expense': {
+      id: '/_dashboardLayout/upload-expense'
+      path: '/upload-expense'
+      fullPath: '/upload-expense'
+      preLoaderRoute: typeof DashboardLayoutUploadExpenseImport
+      parentRoute: typeof DashboardLayoutImport
+    }
   }
 }
 
@@ -64,6 +104,10 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
+  DashboardLayoutRoute: DashboardLayoutRoute.addChildren({
+    DashboardLayoutDashboardRoute,
+    DashboardLayoutUploadExpenseRoute,
+  }),
   LoginRegisterRoute,
   UploadCsvRoute,
 })
@@ -77,6 +121,7 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/_dashboardLayout",
         "/login-register",
         "/upload-csv"
       ]
@@ -84,11 +129,26 @@ export const routeTree = rootRoute.addChildren({
     "/": {
       "filePath": "index.tsx"
     },
+    "/_dashboardLayout": {
+      "filePath": "_dashboardLayout.tsx",
+      "children": [
+        "/_dashboardLayout/dashboard",
+        "/_dashboardLayout/upload-expense"
+      ]
+    },
     "/login-register": {
       "filePath": "login-register.tsx"
     },
     "/upload-csv": {
       "filePath": "upload-csv.tsx"
+    },
+    "/_dashboardLayout/dashboard": {
+      "filePath": "_dashboardLayout/dashboard.tsx",
+      "parent": "/_dashboardLayout"
+    },
+    "/_dashboardLayout/upload-expense": {
+      "filePath": "_dashboardLayout/upload-expense.tsx",
+      "parent": "/_dashboardLayout"
     }
   }
 }
