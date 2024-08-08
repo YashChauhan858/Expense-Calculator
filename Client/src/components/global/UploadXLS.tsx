@@ -1,11 +1,11 @@
-import { TStatementRow, TStatementItem } from "@/types";
+import { TStatementRow, TStatementItem, IUploadXLS } from "@/types";
 import { ChangeEvent, useRef, useState } from "react";
 import * as XLSX from "xlsx";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { File } from "lucide-react";
 
-const UploadXLS = () => {
+const UploadXLS = ({ saveExpenseFileData }: IUploadXLS) => {
   const [fileName, setFileName] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -49,7 +49,8 @@ const UploadXLS = () => {
         });
       });
 
-      console.log({ data });
+      console.log({ data }, Object.values(data).flat());
+      saveExpenseFileData(data);
     };
 
     reader.readAsBinaryString(file);

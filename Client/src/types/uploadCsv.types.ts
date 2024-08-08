@@ -15,3 +15,5 @@ export type TStatementItem = {
   withdraw: string;
   deposit: string;
 };
+
+export type TFileData = Record<string, TStatementItem[]>;
