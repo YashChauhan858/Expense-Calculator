@@ -98,11 +98,6 @@ export const formateDateAndGiveEpoch = (date: string) => {
   return new Date(dateArray.join("/")).getTime();
 };
 
-export const extendDate = (date: Date, extender: number = 7) => {
-  if (!date) return null;
-  return new Date(date.setDate(date.getDate() + extender)).getDate();
-};
-
 export const differenceInDays = (
   date1: number | null,
   date2: number | null
