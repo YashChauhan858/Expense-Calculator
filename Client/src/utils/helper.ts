@@ -13,6 +13,9 @@ export const truncateText = (text: string, maxLength: number = 10): string => {
   return text.slice(0, maxLength - 3) + "...";
 };
 
+/**
+ * Calculates various analytics based on the provided transaction data.
+ */
 export const calculateAnalytics = (
   fileData: TStatementItem[]
 ): IExpenseStoreState["analytics"] | null => {
@@ -91,6 +94,9 @@ export const calculateAnalytics = (
   return analytics;
 };
 
+/**
+ * Formats a date string and returns the corresponding epoch time.
+ */
 export const formateDateAndGiveEpoch = (date: string) => {
   if (!date) return null;
   const dateArray = date.split("/");
@@ -98,6 +104,9 @@ export const formateDateAndGiveEpoch = (date: string) => {
   return new Date(dateArray.join("/")).getTime();
 };
 
+/**
+ * Calculates the difference in days between two dates.
+ */
 export const differenceInDays = (
   date1: number | null,
   date2: number | null
@@ -109,6 +118,9 @@ export const differenceInDays = (
   );
 };
 
+/**
+ * Calculates weekly expenses based on the provided transaction data.
+ */
 const weeklyCalculation = (
   startDate: number | null,
   endDate: number | null,
@@ -146,6 +158,9 @@ const weeklyCalculation = (
   return totalWeeklyExpenseArray;
 };
 
+/**
+ * Calculates monthly expenses based on the provided transaction data.
+ */
 const monthlyCalculation = (
   startDate: number | null,
   endDate: number | null,
