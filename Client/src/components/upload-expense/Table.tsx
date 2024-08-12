@@ -1,8 +1,5 @@
 import {
   ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -22,16 +19,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useState } from "react";
 import { TStatementItem } from "@/types";
 import { truncateText } from "@/utils";
+import { useState } from "react";
+import { AddTags } from "./AddTags";
 
 const columns: ColumnDef<TStatementItem>[] = [
   {
     accessorKey: "date",
     header: () => <div className="text-center font-medium">Date</div>,
     cell: ({ row }) => (
-      <div className="text-center">{row.getValue("date")}</div>
+      <div className="text-center">
+        {row.getValue("date")
+          ? new Date(row.getValue("date")).toLocaleDateString()
+          : "-"}
+      </div>
     ),
     enableSorting: false,
     enableHiding: false,
@@ -77,42 +79,41 @@ const columns: ColumnDef<TStatementItem>[] = [
       );
     },
   },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: () => {
-      return <h1>data</h1>;
-    },
-  },
 ];
 
 const ExpenseTable = ({ fileData }: { fileData: TStatementItem[] | null }) => {
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = useState({});
+  const [modalState, setModalState] = useState<TStatementItem | null>(null);
+  const openModal = (data: TStatementItem) => setModalState(data);
+  const closeModal = () => setModalState(null);
 
   const table = useReactTable<TStatementItem>({
     data: fileData ?? [],
-    columns,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
+    columns: [
+      ...columns,
+      {
+        id: "actions",
+        enableHiding: false,
+        cell: ({ row }) => {
+          return (
+            <Button
+              variant={"outline"}
+              onClick={() => openModal(row?.original)}
+            >
+              Add tag
+            </Button>
+          );
+        },
+      },
+    ],
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,
-    },
   });
 
   return (
     <div className="w-full">
+      {modalState && <AddTags close={closeModal} transaction={modalState} />}
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter Account..."

@@ -11,7 +11,6 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as UploadCsvImport } from './routes/upload-csv'
 import { Route as LoginRegisterImport } from './routes/login-register'
 import { Route as DashboardLayoutImport } from './routes/_dashboardLayout'
 import { Route as IndexImport } from './routes/index'
@@ -20,11 +19,6 @@ import { Route as DashboardLayoutTagsImport } from './routes/_dashboardLayout/ta
 import { Route as DashboardLayoutDashboardImport } from './routes/_dashboardLayout/dashboard'
 
 // Create/Update Routes
-
-const UploadCsvRoute = UploadCsvImport.update({
-  path: '/upload-csv',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const LoginRegisterRoute = LoginRegisterImport.update({
   path: '/login-register',
@@ -82,13 +76,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRegisterImport
       parentRoute: typeof rootRoute
     }
-    '/upload-csv': {
-      id: '/upload-csv'
-      path: '/upload-csv'
-      fullPath: '/upload-csv'
-      preLoaderRoute: typeof UploadCsvImport
-      parentRoute: typeof rootRoute
-    }
     '/_dashboardLayout/dashboard': {
       id: '/_dashboardLayout/dashboard'
       path: '/dashboard'
@@ -123,7 +110,6 @@ export const routeTree = rootRoute.addChildren({
     DashboardLayoutUploadExpenseRoute,
   }),
   LoginRegisterRoute,
-  UploadCsvRoute,
 })
 
 /* prettier-ignore-end */
@@ -136,8 +122,7 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/",
         "/_dashboardLayout",
-        "/login-register",
-        "/upload-csv"
+        "/login-register"
       ]
     },
     "/": {
@@ -153,9 +138,6 @@ export const routeTree = rootRoute.addChildren({
     },
     "/login-register": {
       "filePath": "login-register.tsx"
-    },
-    "/upload-csv": {
-      "filePath": "upload-csv.tsx"
     },
     "/_dashboardLayout/dashboard": {
       "filePath": "_dashboardLayout/dashboard.tsx",

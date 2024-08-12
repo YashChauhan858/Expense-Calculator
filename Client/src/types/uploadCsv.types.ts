@@ -9,11 +9,12 @@ export type TStatementRow = {
 };
 
 export type TStatementItem = {
-  date: string;
+  date: number | null;
   account: string;
   chqRefNo: string;
   withdraw: string;
   deposit: string;
+  tags?: string[];
 };
 
 export type TFileData = Record<string, TStatementItem[]>;

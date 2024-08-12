@@ -1,20 +1,28 @@
+import { createFileRoute } from "@tanstack/react-router";
+
+/** -------- @Component ----------- */
 import UploadXLS from "@/components/global/UploadXLS";
 import ExpenseTable from "@/components/upload-expense/Table";
-import { TFileData } from "@/types";
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Analytics } from "@/components/upload-expense/Analytics";
+
+/** -------- @Store ----------- */
+import { useExpenseStore } from "@/store/expense";
 
 export const Route = createFileRoute("/_dashboardLayout/upload-expense")({
   component: UploadExpense,
 });
 
 function UploadExpense() {
-  const [fileData, setFileData] = useState<TFileData | null>(null);
+  const fileData = useExpenseStore((state) => state.fileData);
+  const analytics = useExpenseStore((state) => state.analytics);
+  const showAnalyticsSection = useExpenseStore(
+    (state) => state.showAnalyticsSection
+  );
 
-  const saveExpenseFileData = (data: TFileData | null) => {
-    if (!data) return;
-    setFileData(data);
-  };
+  const toggleAnalyticsSection = useExpenseStore(
+    (state) => state.toggleAnalyticsSection
+  );
 
   return (
     <section className="pt-10">
@@ -25,14 +33,25 @@ function UploadExpense() {
         processed, you will be able to review and save the data.
       </p>
 
-      <section className="w-full mt-4">
-        <UploadXLS saveExpenseFileData={saveExpenseFileData} />
+      <section className="w-full mt-4 flex gap-3">
+        <UploadXLS />
+        <Button
+          variant={"outline"}
+          onClick={toggleAnalyticsSection}
+          disabled={!showAnalyticsSection.isAnalyticsPresent}
+        >
+          {showAnalyticsSection.show ? "Table" : "Analytics"}
+        </Button>
       </section>
 
       <section className="w-[90%]">
-        <ExpenseTable
-          fileData={fileData ? Object.values(fileData).flat() : null}
-        />
+        {showAnalyticsSection.show ? (
+          <Analytics analytics={analytics} />
+        ) : (
+          <ExpenseTable
+            fileData={fileData ? Object.values(fileData).flat() : null}
+          />
+        )}
       </section>
     </section>
   );
