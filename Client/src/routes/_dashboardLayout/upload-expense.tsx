@@ -4,7 +4,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import UploadXLS from "@/components/global/UploadXLS";
 import ExpenseTable from "@/components/upload-expense/Table";
 import { Button } from "@/components/ui/button";
-import { Analytics } from "@/components/upload-expense/Analytics";
+import Analytics from "@/components/upload-expense/Analytics";
 
 /** -------- @Store ----------- */
 import { useExpenseStore } from "@/store/expense";
@@ -19,6 +19,8 @@ function UploadExpense() {
   const showAnalyticsSection = useExpenseStore(
     (state) => state.showAnalyticsSection
   );
+
+  console.log({ analytics });
 
   const toggleAnalyticsSection = useExpenseStore(
     (state) => state.toggleAnalyticsSection
@@ -44,9 +46,11 @@ function UploadExpense() {
         </Button>
       </section>
 
-      <section className="w-[90%]">
+      <section
+        className={`${showAnalyticsSection.show ? "w-full" : "w-[90%]"}`}
+      >
         {showAnalyticsSection.show ? (
-          <Analytics analytics={analytics} />
+          <Analytics />
         ) : (
           <ExpenseTable
             fileData={fileData ? Object.values(fileData).flat() : null}

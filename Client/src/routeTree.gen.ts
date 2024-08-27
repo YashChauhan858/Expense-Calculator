@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as LoginRegisterImport } from './routes/login-register'
+import { Route as ChartsImport } from './routes/charts'
 import { Route as DashboardLayoutImport } from './routes/_dashboardLayout'
 import { Route as IndexImport } from './routes/index'
 import { Route as DashboardLayoutUploadExpenseImport } from './routes/_dashboardLayout/upload-expense'
@@ -22,6 +23,11 @@ import { Route as DashboardLayoutDashboardImport } from './routes/_dashboardLayo
 
 const LoginRegisterRoute = LoginRegisterImport.update({
   path: '/login-register',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ChartsRoute = ChartsImport.update({
+  path: '/charts',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -69,6 +75,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardLayoutImport
       parentRoute: typeof rootRoute
     }
+    '/charts': {
+      id: '/charts'
+      path: '/charts'
+      fullPath: '/charts'
+      preLoaderRoute: typeof ChartsImport
+      parentRoute: typeof rootRoute
+    }
     '/login-register': {
       id: '/login-register'
       path: '/login-register'
@@ -109,6 +122,7 @@ export const routeTree = rootRoute.addChildren({
     DashboardLayoutTagsRoute,
     DashboardLayoutUploadExpenseRoute,
   }),
+  ChartsRoute,
   LoginRegisterRoute,
 })
 
@@ -122,6 +136,7 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/",
         "/_dashboardLayout",
+        "/charts",
         "/login-register"
       ]
     },
@@ -135,6 +150,9 @@ export const routeTree = rootRoute.addChildren({
         "/_dashboardLayout/tags",
         "/_dashboardLayout/upload-expense"
       ]
+    },
+    "/charts": {
+      "filePath": "charts.jsx"
     },
     "/login-register": {
       "filePath": "login-register.tsx"

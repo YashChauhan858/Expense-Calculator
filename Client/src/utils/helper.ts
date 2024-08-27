@@ -197,3 +197,12 @@ const monthlyCalculation = (
 
   return totalWeeklyExpenseArray;
 };
+
+export const numberFormatter = (num: number) => {
+  if (!num || num === 0) return 0;
+  const currencyFormatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+  return currencyFormatter.format(num).replace("$", "");
+};
